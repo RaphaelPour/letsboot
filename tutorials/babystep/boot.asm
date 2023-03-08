@@ -1,3 +1,7 @@
+; nasm reference: https://www.nasm.us/doc/nasmdoc3.html
+%define LF 10
+%define CR 13
+%define EOF 0
 %macro BiosPrint 1
                 mov si, word %1
 ch_loop:lodsb
@@ -19,7 +23,7 @@ hang:
  
    jmp hang
  
-msg   db 'Hello Raphael', 13, 10, 0
+msg   db 'Hello Raphael', CR, LF, EOF
  
    times 510-($-$$) db 0
    db 0x55
