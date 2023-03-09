@@ -18,9 +18,8 @@ done:
    mov ds, ax
    cld
  
-hang:
    BiosPrint msg
- 
+hang:
    jmp hang
  
 msg   db 'Hello Raphael', CR, LF, EOF
