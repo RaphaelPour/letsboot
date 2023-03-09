@@ -4,10 +4,10 @@
 %define EOF 0
 %macro BiosPrint 1
                 mov si, word %1
-ch_loop:lodsb
-   or al, al
-   jz done
-   mov ah, 0x0E
+ch_loop:lodsb    ; load next char of string in si
+   or al, al     ; check if null terminator reached
+   jz done       ; finish print method if null terminator reached
+   mov ah, 0x0E  ; 
    int 0x10
    jmp ch_loop
 done:
