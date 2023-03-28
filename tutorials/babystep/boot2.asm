@@ -1,10 +1,16 @@
-[ORG 0x7c00]
-	xor ax, ax
-	mov ds, ax
-	mov ss, ax
-	mov sp, 0x9c00
+; boot2 - babystep 4
 
-	cld
+[ORG 0x7c00]
+  xor ax, ax     ; clear ax by xoring it with itself
+  mov ds, ax     ; initialize data segment register
+	
+	; initialize stack
+	mov ss, ax     ; initialize stack segment register
+	mov sp, 0x9c00 ; set stack pointer to bottom of stack far behind the bootloader
+  
+	cld            ; clear direction flag, that decides in which direction
+                 ; e.g. loadsb should load the memory (++ as usual or -- for
+                 ; reading backwards)
 
 	mov ax, 0xb800
 	mov es, ax
@@ -24,9 +30,9 @@ hang:
 	jmp hang
 
 dochar: 
-    call cprint
-sprint:
-	lodsb
+  call cprint
+sprint: 
+  lodsb
 	cmp al, 0
 	jne dochar
 	add byte [ypos], 1
@@ -36,6 +42,7 @@ sprint:
 cprint:
 	mov ah, 0x09
 	mov cx, ax
+	movzx ax, byte [ypos]
 	mov dx, 160
 	mul dx
 	movzx bx, byte [xpos]
@@ -77,7 +84,7 @@ ypos   db 0
 hexstr   db '0123456789ABCDEF'
 outstr16   db '0000', 0  ;register value string
 reg16   dw    0  ; pass values to printreg16
-msg   db "What are you doing, Dave?", 0
+msg   db "Let's boot something :)", 0
 times 510-($-$$) db 0
 db 0x55
 db 0xAA

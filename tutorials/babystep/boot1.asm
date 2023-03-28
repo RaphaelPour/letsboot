@@ -1,3 +1,4 @@
+; boot1 - babystep 1-3
 ; nasm reference: https://www.nasm.us/doc/nasmdoc3.html
 ; interrupt reference: https://en.wikipedia.org/wiki/BIOS_interrupt_call#Interrupt_table
 %define LF 10 ; line feed
