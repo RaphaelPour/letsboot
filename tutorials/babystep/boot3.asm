@@ -15,27 +15,27 @@
   mov ax, 0xb800  ; VGA video buffer starts at 0xb800
   mov es, ax      ; set extra-segment to the VGA Buffer
 
-	cli							; <babystep 5 starts here> disable all interrupts
-	mov bx, 0x09
-	shl bx, 2
-	xor ax, ax
-	mov gs, ax
-	mov [gs:bx], word on_key_press
-	mov [gs:bx+2], ds
-	sti
+  cli	                          ; <babystep 5 starts here> disable all interrupts
+  mov bx, 0x09                    ; Keyboard hardware interrupt 
+  shl bx, 2                       ; shift interrupt to the left by 2 
+  xor ax, ax                      ; zero ax again
+  mov gs, ax                      
+  mov [gs:bx], word on_key_press
+  mov [gs:bx+2], ds
+  sti                             ; set interrupt flag again
 
 hang:
   jmp hang
 
 ; key callback
 on_key_press:
-	in al, 0x60
+	in al, 0x60            ; read from I/O Port 
 	mov bl, al
 	mov byte [port60], al
 
 	in al, 0x061
 	mov ah, al
-	or al, 0x80
+	or al, 0x80            ; 
 	out 0x61, al
 	xchg ah, al
 	out 0x61, al
