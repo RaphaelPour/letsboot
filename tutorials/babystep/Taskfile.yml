@@ -7,6 +7,7 @@ tasks:
         - nasm boot1.asm -f bin -o boot1.bin
         - nasm boot2.asm -f bin -o boot2.bin
         - nasm boot3.asm -f bin -o boot3.bin
+        - nasm boot4.asm -f bin -o boot4.bin
   boot1:
     cmds:
      - qemu-system-i386 -hda boot1.bin
@@ -16,3 +17,6 @@ tasks:
   boot3:
     cmds:
      - qemu-system-i386 -hda boot3.bin
+  boot4:
+    cmds:
+     - qemu-system-i386 -hda boot4.bin
