@@ -43,10 +43,10 @@ on_key_press:
 	mov al, 0x20
 	out 0x20, al
 
-	and bl, 0x80
-	jnz on_key_press_done
+	and bl, 0x80           ; check if key has been released
+	jnz on_key_press_done 
 
-	mov ax, [port60]
+	mov ax, [port60]       ; otherwise print key
 	mov word[reg16], ax
 	call printreg16
 
