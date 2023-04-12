@@ -1,0 +1,17 @@
+version: '2'
+
+tasks:
+  build:
+    desc: "Build barebones iso from source"
+    cmds:
+      - i386-elf-as boot.s -o boot.o
+      - i386-elf-gcc -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+      - i386-elf-gcc -T linker.ld -o barebones.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
+      - mkdir -p iso/boot/grub
+      - cp barebones.bin iso/boot/
+      - cp grub.cfg iso/boot/grub/
+      - grub2-mkrescue -o barebones.iso iso/
+  boot:
+    desc: "Boot iso"
+    cmds:
+      - qemu-system-i386 -cdrom barebones.iso
