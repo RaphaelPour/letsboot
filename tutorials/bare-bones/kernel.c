@@ -110,13 +110,21 @@ void terminal_writestring(const char* data)
 {
 	terminal_write(data, strlen(data));
 }
- 
+
+void terminal_repeat(const char* data, int times)
+{
+  for(int i=0;i<times;i++) terminal_writestring(data);
+}
+
 void kernel_main(void) 
 {
 	/* Initialize terminal interface */
 	terminal_initialize();
  
 	/* Newline support is left as an exercise. */
+  terminal_repeat("*",VGA_WIDTH);
 	terminal_writestring("Hello, Raphael!\n");
 	terminal_writestring("I'm a multi-\nline string\n");
+  terminal_writestring("Bye, Raphael!\n");
+  terminal_repeat("*",VGA_WIDTH);
 }
